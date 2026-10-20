@@ -18,7 +18,7 @@ import {
   Eye,
   Info,
 } from 'lucide-react';
-import { AjeerLogo } from './OfficialLogos';
+import { AjeerLogo, MohrsdLogo, Vision2030Logo, QiwaLogo } from './OfficialLogos';
 
 interface AdminSettingsProps {
   settings: SystemSettings;
@@ -326,25 +326,29 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
                   © هـ ١٤٤٦ / أُجْرِ لحلول الموارد البشرية
                 </div>
 
-                {logos.some((l) => l && l.trim()) ? (
-                  <div className="pt-2.5 border-t border-slate-100 flex items-center justify-center gap-4">
-                    {logos.map((url, i) =>
-                      url ? (
-                        <div key={i} className="h-9 w-20 flex items-center justify-center">
-                          <img
-                            src={url}
-                            alt={`معاينة الشعار ${i + 1}`}
-                            className="max-h-9 max-w-full object-contain"
-                          />
-                        </div>
-                      ) : null
+                <div className="pt-2.5 border-t border-slate-100 flex items-center justify-around gap-2">
+                  <div className="h-8 w-20 flex items-center justify-center">
+                    {logos[0] ? (
+                      <img src={logos[0]} alt="شعار 1" className="max-h-8 max-w-full object-contain" />
+                    ) : (
+                      <MohrsdLogo className="h-7 w-auto object-contain" />
                     )}
                   </div>
-                ) : (
-                  <div className="pt-2 border-t border-slate-100 text-[10px] text-slate-400 italic">
-                    (لم يتم رفع شعارات بعد — لن تظهر أي شعارات إضافية)
+                  <div className="h-8 w-20 flex items-center justify-center">
+                    {logos[1] ? (
+                      <img src={logos[1]} alt="شعار 2" className="max-h-8 max-w-full object-contain" />
+                    ) : (
+                      <Vision2030Logo className="h-7 w-auto object-contain" />
+                    )}
                   </div>
-                )}
+                  <div className="h-8 w-20 flex items-center justify-center">
+                    {logos[2] ? (
+                      <img src={logos[2]} alt="شعار 3" className="max-h-8 max-w-full object-contain" />
+                    ) : (
+                      <QiwaLogo className="h-6 w-auto object-contain" />
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

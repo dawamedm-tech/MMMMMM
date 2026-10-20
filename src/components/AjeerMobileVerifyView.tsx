@@ -1,7 +1,7 @@
 import React from 'react';
 import { WorkPermit, Worker, Establishment } from '../types';
 import { getDaysRemaining } from '../utils/helpers';
-import { AjeerLogo } from './OfficialLogos';
+import { AjeerLogo, MohrsdLogo, Vision2030Logo, QiwaLogo } from './OfficialLogos';
 import { Globe, AlertCircle } from 'lucide-react';
 
 interface AjeerMobileVerifyViewProps {
@@ -31,6 +31,53 @@ export const AjeerMobileVerifyView: React.FC<AjeerMobileVerifyViewProps> = ({
   isInvalidOrDisabled = false,
   errorMessage,
 }) => {
+  // Safe extract of the 3 footer logos
+  const logosList = Array.isArray(footerLogos) ? footerLogos : [];
+
+  // Footer 3 logos component
+  const renderThreeFooterLogos = () => (
+    <div className="pt-3.5 border-t border-slate-100 flex items-center justify-around gap-2 sm:gap-4 select-none">
+      {/* Logo 1: Ministry of Human Resources (or custom uploaded logo 1) */}
+      <div className="flex items-center justify-center h-11 max-w-[110px]">
+        {logosList[0] && typeof logosList[0] === 'string' && logosList[0].trim() ? (
+          <img
+            src={logosList[0]}
+            alt="وزارة الموارد البشرية والتنمية الاجتماعية"
+            className="max-h-11 w-auto max-w-full object-contain"
+          />
+        ) : (
+          <MohrsdLogo className="h-10 w-auto object-contain" />
+        )}
+      </div>
+
+      {/* Logo 2: Saudi Vision 2030 (or custom uploaded logo 2) */}
+      <div className="flex items-center justify-center h-11 max-w-[100px]">
+        {logosList[1] && typeof logosList[1] === 'string' && logosList[1].trim() ? (
+          <img
+            src={logosList[1]}
+            alt="رؤية المملكة 2030"
+            className="max-h-11 w-auto max-w-full object-contain"
+          />
+        ) : (
+          <Vision2030Logo className="h-9 w-auto object-contain" />
+        )}
+      </div>
+
+      {/* Logo 3: Qiwa Platform (or custom uploaded logo 3) */}
+      <div className="flex items-center justify-center h-11 max-w-[100px]">
+        {logosList[2] && typeof logosList[2] === 'string' && logosList[2].trim() ? (
+          <img
+            src={logosList[2]}
+            alt="منصة قوى"
+            className="max-h-11 w-auto max-w-full object-contain"
+          />
+        ) : (
+          <QiwaLogo className="h-8 w-auto object-contain" />
+        )}
+      </div>
+    </div>
+  );
+
   // If invalid token, disabled, or permit missing
   if (isInvalidOrDisabled || !permit || !worker || !issuingEst || !hostEst) {
     return (
@@ -67,9 +114,10 @@ export const AjeerMobileVerifyView: React.FC<AjeerMobileVerifyViewProps> = ({
               <span className="text-slate-300">•</span>
               <span className="hover:text-slate-800 transition-colors">الشروط والأحكام</span>
             </div>
-            <div className="text-[11px] text-slate-400 font-sans">
+            <div className="text-[11px] text-slate-400 font-sans mb-3">
               © هـ ١٤٤٦ / أُجْرِ لحلول الموارد البشرية
             </div>
+            {renderThreeFooterLogos()}
           </footer>
         </div>
       </div>
@@ -86,11 +134,6 @@ export const AjeerMobileVerifyView: React.FC<AjeerMobileVerifyViewProps> = ({
   const displayIqama = maskIdEnabled
     ? `${worker.iqamaNumber.slice(0, 3)}****${worker.iqamaNumber.slice(-3)}`
     : worker.iqamaNumber;
-
-  // Logos array (filter or keep slot array)
-  const logosList = Array.isArray(footerLogos) ? footerLogos : [];
-  const validLogos = logosList.filter((l) => typeof l === 'string' && l.trim().length > 0);
-  const hasUploadedLogos = validLogos.length > 0;
 
   return (
     <div className="min-h-screen bg-[#ede8f5] text-slate-800 font-['Cairo',Arial,sans-serif] py-6 px-4 flex flex-col items-center justify-start select-none" dir="rtl">
@@ -272,7 +315,7 @@ export const AjeerMobileVerifyView: React.FC<AjeerMobileVerifyViewProps> = ({
           </div>
         </div>
 
-        {/* Footer (التذييل الأبيض المرجعي) */}
+        {/* Footer (التذييل الأبيض المرجعي مع الثلاثة شعارات) */}
         <footer className="bg-white rounded-xl shadow-xs border border-purple-100/50 p-5 text-center text-slate-500 text-[11px] leading-[1.6]">
           {/* 1. شعار أجير في منتصف الجزء العلوي من التذييل */}
           <div className="flex justify-center items-center mb-2.5">
@@ -297,23 +340,8 @@ export const AjeerMobileVerifyView: React.FC<AjeerMobileVerifyViewProps> = ({
             <span className="font-medium cursor-pointer hover:text-slate-700 transition-colors">English</span>
           </div>
 
-          {/* 5. المساحة السفلية المخصصة للثلاثة شعارات فقط المرفوعة من الأدمن */}
-          {hasUploadedLogos && (
-            <div className="pt-3.5 border-t border-slate-100 flex items-center justify-center gap-6 sm:gap-8">
-              {logosList.slice(0, 3).map((url, idx) => {
-                if (!url || typeof url !== 'string' || !url.trim()) return null;
-                return (
-                  <div key={idx} className="flex items-center justify-center h-11 max-w-[110px]">
-                    <img
-                      src={url}
-                      alt={`شعار الشريك المعتمد ${idx + 1}`}
-                      className="max-h-11 w-auto max-w-full object-contain"
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          )}
+          {/* 5. المساحة السفلية: ثلاثة شعارات دائماً متناسقة ومتجاورة */}
+          {renderThreeFooterLogos()}
         </footer>
       </div>
     </div>
