@@ -18,7 +18,7 @@ import {
   Eye,
   Info,
 } from 'lucide-react';
-import { AjeerLogo, MohrsdLogo, Vision2030Logo, QiwaLogo } from './OfficialLogos';
+import { AjeerLogo } from './OfficialLogos';
 
 interface AdminSettingsProps {
   settings: SystemSettings;
@@ -53,6 +53,13 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
   });
 
   const [logos, setLogos] = useState<[string, string, string]>(initialLogos);
+
+  // Which logo slots are still empty (shown to the admin; no substitute logo is used)
+  const missingSlotNumbers = logos
+    .map((logo, idx) => (logo && logo.trim() ? null : idx + 1))
+    .filter((idx): idx is number => idx !== null)
+    .map((idx) => `#${idx}`);
+  const allLogosUploaded = missingSlotNumbers.length === 0;
   const [newTermInput, setNewTermInput] = useState('');
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [importError, setImportError] = useState<string | null>(null);
@@ -207,6 +214,15 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
                 <li>يتم عرض الصور بنسب أبعادها الأصلية مع خاصية الاحتواء (object-fit: contain) وبأعلى جودة.</li>
                 <li>يمكنك رفع أو استبدال أو حذف أي شعار والتحكم في ترتيب المواضع (يمين / وسط / يسار).</li>
               </ul>
+              <p
+                className={`text-[11px] font-bold pt-1 ${
+                  allLogosUploaded ? 'text-emerald-700' : 'text-rose-700'
+                }`}
+              >
+                {allLogosUploaded
+                  ? '✓ الشعارات الثلاثة مرفوعة وستظهر في صفحة التصريح بالترتيب المحفوظ.'
+                  : `تنبيه النقص: الموضع(ات) غير المرفوعة ${missingSlotNumbers.join('، ')} — لن يعرض أي شعار بديل فيها في صفحة التصريح، وتبقى مساحتها محجوزة بترتيبها.`}
+              </p>
             </div>
           </div>
 
@@ -326,26 +342,26 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
                   © هـ ١٤٤٦ / أُجْرِ لحلول الموارد البشرية
                 </div>
 
-                <div className="pt-2.5 border-t border-slate-100 flex items-center justify-around gap-2">
+                <div className="pt-2.5 border-t border-slate-100 flex items-center justify-center gap-1 sm:gap-3">
                   <div className="h-8 w-20 flex items-center justify-center">
                     {logos[0] ? (
                       <img src={logos[0]} alt="شعار 1" className="max-h-8 max-w-full object-contain" />
                     ) : (
-                      <MohrsdLogo className="h-7 w-auto object-contain" />
+                      <span className="text-[9px] font-bold text-rose-500">فارغ — لن يظهر</span>
                     )}
                   </div>
                   <div className="h-8 w-20 flex items-center justify-center">
                     {logos[1] ? (
                       <img src={logos[1]} alt="شعار 2" className="max-h-8 max-w-full object-contain" />
                     ) : (
-                      <Vision2030Logo className="h-7 w-auto object-contain" />
+                      <span className="text-[9px] font-bold text-rose-500">فارغ — لن يظهر</span>
                     )}
                   </div>
                   <div className="h-8 w-20 flex items-center justify-center">
                     {logos[2] ? (
                       <img src={logos[2]} alt="شعار 3" className="max-h-8 max-w-full object-contain" />
                     ) : (
-                      <QiwaLogo className="h-6 w-auto object-contain" />
+                      <span className="text-[9px] font-bold text-rose-500">فارغ — لن يظهر</span>
                     )}
                   </div>
                 </div>

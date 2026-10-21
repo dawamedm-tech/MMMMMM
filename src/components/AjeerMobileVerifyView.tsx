@@ -1,7 +1,7 @@
 import React from 'react';
 import { WorkPermit, Worker, Establishment } from '../types';
 import { getDaysRemaining } from '../utils/helpers';
-import { AjeerLogo, MohrsdLogo, Vision2030Logo, QiwaLogo } from './OfficialLogos';
+import { AjeerLogo } from './OfficialLogos';
 import { Globe, AlertCircle } from 'lucide-react';
 
 interface AjeerMobileVerifyViewProps {
@@ -34,47 +34,70 @@ export const AjeerMobileVerifyView: React.FC<AjeerMobileVerifyViewProps> = ({
   // Safe extract of the 3 footer logos
   const logosList = Array.isArray(footerLogos) ? footerLogos : [];
 
-  // Footer 3 logos component
+  // Slot geometry (max width per slot, phone / desktop ≥640px). On phones the
+  // footer row is already fully used by the three logos, so its width cap stays
+  // at the current size; from the `sm` breakpoint up the logos render larger.
+  const footerLogoSlots = [
+    {
+      label: 'وزارة الموارد البشرية والتنمية الاجتماعية',
+      filledClass: 'max-w-[134px] sm:max-w-[160px]',
+      emptyClass: 'w-[134px] sm:w-[160px]',
+    },
+    {
+      label: 'رؤية المملكة 2030',
+      filledClass: 'max-w-[122px] sm:max-w-[146px]',
+      emptyClass: 'w-[122px] sm:w-[146px]',
+    },
+    {
+      label: 'منصة قوى',
+      filledClass: 'max-w-[122px] sm:max-w-[146px]',
+      emptyClass: 'w-[122px] sm:w-[146px]',
+    },
+  ];
+
+  // One logo slot: shows ONLY the logo uploaded by the admin, in its saved order.
+  // An empty slot keeps its reserved width so positions and spacing never shift,
+  // and no default/substitute logo or broken image is ever rendered.
+  const renderLogoSlot = (index: number) => {
+    const slot = footerLogoSlots[index];
+    const raw = logosList[index];
+    const src = typeof raw === 'string' ? raw.trim() : '';
+    const baseClass = 'flex items-center justify-center h-[54px] sm:h-[64px] min-w-0';
+
+    if (!src) {
+      return (
+        <div
+          key={index}
+          className={`${baseClass} ${slot.emptyClass}`}
+          aria-label={`${slot.label}: شعار غير مرفوع`}
+        />
+      );
+    }
+
+    return (
+      <div key={index} className={`${baseClass} ${slot.filledClass}`}>
+        <img
+          src={src}
+          alt={slot.label}
+          className="max-h-[54px] sm:max-h-[64px] w-auto max-w-full object-contain"
+          onError={(e) => {
+            // Never show a broken-image icon; the slot keeps its place.
+            e.currentTarget.style.visibility = 'hidden';
+          }}
+        />
+      </div>
+    );
+  };
+
+  // Footer 3 logos component: one centered row, equal spacing between logos
   const renderThreeFooterLogos = () => (
-    <div className="pt-3.5 border-t border-slate-100 flex items-center justify-around gap-1 sm:gap-3 select-none">
-      {/* Logo 1: Ministry of Human Resources (or custom uploaded logo 1) */}
-      <div className="flex items-center justify-center h-[54px] max-w-[134px] min-w-0">
-        {logosList[0] && typeof logosList[0] === 'string' && logosList[0].trim() ? (
-          <img
-            src={logosList[0]}
-            alt="وزارة الموارد البشرية والتنمية الاجتماعية"
-            className="max-h-[54px] w-auto max-w-full object-contain"
-          />
-        ) : (
-          <MohrsdLogo className="h-[49px] w-auto object-contain" />
-        )}
-      </div>
-
-      {/* Logo 2: Saudi Vision 2030 (or custom uploaded logo 2) */}
-      <div className="flex items-center justify-center h-[54px] max-w-[122px] min-w-0">
-        {logosList[1] && typeof logosList[1] === 'string' && logosList[1].trim() ? (
-          <img
-            src={logosList[1]}
-            alt="رؤية المملكة 2030"
-            className="max-h-[54px] w-auto max-w-full object-contain"
-          />
-        ) : (
-          <Vision2030Logo className="h-[44px] w-auto object-contain" />
-        )}
-      </div>
-
-      {/* Logo 3: Qiwa Platform (or custom uploaded logo 3) */}
-      <div className="flex items-center justify-center h-[54px] max-w-[122px] min-w-0">
-        {logosList[2] && typeof logosList[2] === 'string' && logosList[2].trim() ? (
-          <img
-            src={logosList[2]}
-            alt="منصة قوى"
-            className="max-h-[54px] w-auto max-w-full object-contain"
-          />
-        ) : (
-          <QiwaLogo className="h-[39px] w-auto object-contain" />
-        )}
-      </div>
+    <div className="pt-3.5 border-t border-slate-100 flex items-center justify-center gap-1 sm:gap-3 select-none">
+      {/* Slot 1: right-most in RTL (الشعار الأول) */}
+      {renderLogoSlot(0)}
+      {/* Slot 2: middle (الشعار الثاني) */}
+      {renderLogoSlot(1)}
+      {/* Slot 3: left-most in RTL (الشعار الثالث) */}
+      {renderLogoSlot(2)}
     </div>
   );
 
