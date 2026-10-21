@@ -254,6 +254,37 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  // The 3 footer logos of the public verification page are stored on the server
+  // (uploaded by the admin). Visitors who open the QR link have no session and an
+  // empty localStorage, so fetch them from the public, read-only verify endpoint.
+  const [publicFooterLogos, setPublicFooterLogos] = useState<[string, string, string] | null>(null);
+
+  useEffect(() => {
+    if (route.view !== 'verify' || !route.param) {
+      setPublicFooterLogos(null);
+      return;
+    }
+
+    let cancelled = false;
+    fetch(`/api/public/verify/${encodeURIComponent(route.param.trim())}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data: any) => {
+        if (cancelled || !data || !Array.isArray(data.footerLogos)) return;
+        setPublicFooterLogos([
+          data.footerLogos[0] || '',
+          data.footerLogos[1] || '',
+          data.footerLogos[2] || '',
+        ]);
+      })
+      .catch(() => {
+        // Keep the locally stored settings as a graceful fallback
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [route.view, route.param]);
+
   // Sync selected permit when document route specifies an id
   useEffect(() => {
     if (route.view === 'document' && route.param) {
@@ -794,6 +825,15 @@ export default function App() {
   //   «تم تحميل البيانات بنجاح»
   // - Followed by «معلومات التصريح»، «المنشأة المستفيدة»، «المنشأة المقدمة للخدمة»، and the 3 footer logos
   if (route.view === 'verify') {
+    // Logos uploaded by the admin (server-side) take priority so every visitor
+    // sees the same 3 logos; local settings remain the fallback.
+    const localFooterLogos = settings.footerLogos || [
+      settings.footerLogo1 || '',
+      settings.footerLogo2 || '',
+      settings.footerLogo3 || '',
+    ];
+    const effectiveFooterLogos = publicFooterLogos || localFooterLogos;
+
     const targetPermit =
       (route.param
         ? permits.find(
@@ -816,7 +856,7 @@ export default function App() {
           pageHeaderTitle={verifyPageTitle}
           pageHeaderSubtitle={verifyPageSubtitle}
           customAjeerLogoUrl={ajeerLogoUrl}
-          footerLogos={settings.footerLogos || [settings.footerLogo1 || '', settings.footerLogo2 || '', settings.footerLogo3 || '']}
+          footerLogos={effectiveFooterLogos}
         />
       );
     }
@@ -842,7 +882,7 @@ export default function App() {
         pageHeaderSubtitle={verifyPageSubtitle}
         maskIdEnabled={settings.maskSensitiveData}
         customAjeerLogoUrl={ajeerLogoUrl}
-        footerLogos={settings.footerLogos || [settings.footerLogo1 || '', settings.footerLogo2 || '', settings.footerLogo3 || '']}
+        footerLogos={effectiveFooterLogos}
       />
     );
   }
