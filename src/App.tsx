@@ -78,11 +78,17 @@ export default function App() {
     const saved = localStorage.getItem('ajeer_settings');
     const parsed = saved ? JSON.parse(saved) : INITIAL_SETTINGS;
     // Ensure footerLogos array is populated with at least 3 elements
-    const footerLogos: [string, string, string] = [
-      parsed.footerLogos?.[0] || parsed.footerLogo1 || '',
-      parsed.footerLogos?.[1] || parsed.footerLogo2 || '',
-      parsed.footerLogos?.[2] || parsed.footerLogo3 || '',
+    const defaultLogos: [string, string, string] = [
+      INITIAL_SETTINGS.footerLogos?.[0] || '/logos/logo-takamol.svg',
+      INITIAL_SETTINGS.footerLogos?.[1] || '/logos/logo-mohrsd.svg',
+      INITIAL_SETTINGS.footerLogos?.[2] || '/logos/logo-vision2030.svg',
     ];
+    let footerLogos: [string, string, string];
+    if (Array.isArray(parsed.footerLogos) && parsed.footerLogos.length === 3 && parsed.footerLogos.some((l: string) => l && l.trim())) {
+      footerLogos = [parsed.footerLogos[0] ?? '', parsed.footerLogos[1] ?? '', parsed.footerLogos[2] ?? ''];
+    } else {
+      footerLogos = defaultLogos;
+    }
     return { ...parsed, footerLogos };
   });
 

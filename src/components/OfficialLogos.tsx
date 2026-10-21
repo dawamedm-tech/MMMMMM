@@ -1,8 +1,80 @@
 import React from 'react';
 
-// Official Ministry of Human Resources and Social Development Logo (Vector Replica)
+// 1. Exact Official Ajeer Logo (مطابق تماماً للصورة المرجعية)
+export const AjeerLogo: React.FC<{ className?: string; customUrl?: string }> = ({
+  className = 'h-11 w-auto object-contain',
+  customUrl,
+}) => {
+  if (customUrl) {
+    return <img src={customUrl} alt="شعار أجير AJEER" className={className} />;
+  }
+
+  return (
+    <div className={`flex items-center justify-center select-none ${className}`}>
+      <svg viewBox="0 0 130 52" className="h-full w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Arabic wordmark أ جـ يـ ر in dark navy with green accent */}
+        <g transform="translate(15, 6)">
+          {/* Main letter shapes in navy #13294b */}
+          <path
+            d="M80 2V25H74V2H80Z"
+            fill="#13294b"
+          />
+          {/* Hamza above Alef */}
+          <path
+            d="M77 0C78.5 0 79.5 0.8 79.5 2C79.5 2.8 79 3.4 78 3.7L80 5H75L76.5 3.5C75.5 3.2 75 2.5 75 1.8C75 0.8 75.8 0 77 0Z"
+            fill="#13294b"
+          />
+
+          {/* Letter Jeem & Yaa & Raa */}
+          {/* Raa on the left */}
+          <path
+            d="M3 13H15V19C15 26 11 30 2 31L0 26C6 25 9 22 9 19V17H3V13Z"
+            fill="#13294b"
+          />
+          {/* Yaa connection and baseline */}
+          <path
+            d="M15 13H42V18H15V13Z"
+            fill="#13294b"
+          />
+          {/* Two dots below Yaa in dark navy */}
+          <circle cx="23" cy="23" r="2.2" fill="#13294b" />
+          <circle cx="31" cy="23" r="2.2" fill="#13294b" />
+
+          {/* Jeem body with green horizontal bar accent #00a859 */}
+          <path
+            d="M40 13H68V18H40V13Z"
+            fill="#13294b"
+          />
+          {/* Green accent bar over the word */}
+          <path
+            d="M37 7H56V11H37V7Z"
+            fill="#009639"
+          />
+          {/* Dot of Jeem below */}
+          <circle cx="53" cy="23" r="2.2" fill="#13294b" />
+
+          {/* English Wordmark A J E E R underneath */}
+          <text
+            x="48"
+            y="35"
+            textAnchor="middle"
+            fill="#009639"
+            fontSize="9"
+            fontWeight="800"
+            letterSpacing="3"
+            fontFamily="Arial, -apple-system, sans-serif"
+          >
+            AJEER
+          </text>
+        </g>
+      </svg>
+    </div>
+  );
+};
+
+// 2. Exact Ministry of Human Resources and Social Development Logo (مطابق للصورة المرجعية - الوردة الرباعية الملونة)
 export const MohrsdLogo: React.FC<{ className?: string; customUrl?: string }> = ({
-  className = 'h-12 w-auto object-contain',
+  className = 'h-10 w-auto object-contain',
   customUrl,
 }) => {
   if (customUrl) {
@@ -10,40 +82,127 @@ export const MohrsdLogo: React.FC<{ className?: string; customUrl?: string }> = 
   }
 
   return (
-    <div className={`flex items-center gap-2 select-none ${className}`}>
-      {/* Emblem SVG */}
-      <svg viewBox="0 0 160 55" className="h-full w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Palm Tree and Crossing Swords Graphic in Gold and Forest Green */}
-        <g transform="translate(118, 5)">
-          <path d="M20 2C19 5 17 8 14 10C17 12 19 15 20 18C21 15 23 12 26 10C23 8 21 5 20 2Z" fill="#1b6d38" />
-          <path d="M11 9C14 11 16 13 16 16C13 17 10 18 7 17C9 14 10 11 11 9Z" fill="#1b6d38" />
-          <path d="M29 9C30 11 31 14 33 17C29 18 26 17 24 16C24 13 26 11 29 9Z" fill="#1b6d38" />
-          {/* Trunk */}
-          <path d="M18 17H22V30H18V17Z" fill="#a37e2c" />
-          {/* Curved Crossing Swords */}
-          <path d="M8 33C14 33 22 30 29 25L27 23C21 27 14 30 8 30V33Z" fill="#a37e2c" />
-          <path d="M32 33C26 33 18 30 11 25L13 23C19 27 26 30 32 30V33Z" fill="#a37e2c" />
-          <circle cx="7" cy="32" r="1.8" fill="#a37e2c" />
-          <circle cx="33" cy="32" r="1.8" fill="#a37e2c" />
-        </g>
-        {/* Ministry Typography */}
-        <text x="112" y="19" textAnchor="end" fill="#1b6d38" fontSize="10.5" fontWeight="bold" fontFamily="Arial, 'Noto Naskh Arabic', sans-serif">
-          وزارة الموارد البشرية
+    <div className={`flex items-center justify-center select-none ${className}`}>
+      <svg viewBox="0 0 134 50" className="h-full w-auto max-w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Arabic Typography on the right */}
+        <text
+          x="88"
+          y="22"
+          textAnchor="end"
+          fill="#165c66"
+          fontSize="12.5"
+          fontWeight="bold"
+          fontFamily="'Cairo', 'Noto Naskh Arabic', Arial, sans-serif"
+        >
+          الموارد البشرية
         </text>
-        <text x="112" y="32" textAnchor="end" fill="#a37e2c" fontSize="9.5" fontWeight="bold" fontFamily="Arial, 'Noto Naskh Arabic', sans-serif">
+        <text
+          x="88"
+          y="36"
+          textAnchor="end"
+          fill="#165c66"
+          fontSize="11"
+          fontWeight="bold"
+          fontFamily="'Cairo', 'Noto Naskh Arabic', Arial, sans-serif"
+        >
           والتنمية الاجتماعية
         </text>
-        <text x="112" y="43" textAnchor="end" fill="#555555" fontSize="6" fontFamily="Arial, sans-serif">
-          Ministry of Human Resources
-        </text>
+
+        {/* The 4 Iconic Colorful Petals (orange, gold, green, cyan) */}
+        <g transform="translate(108, 25)">
+          {/* Top petal: Orange #f26f21 */}
+          <path
+            d="M0 -22C1.5 -12 7 -4 13 0C7 -2 2 -8 0 -22Z"
+            fill="#f26f21"
+          />
+          <path
+            d="M0 -22C-1.5 -12 -7 -4 -13 0C-7 -2 -2 -8 0 -22Z"
+            fill="#ff8533"
+          />
+
+          {/* Right petal: Golden Yellow #fab915 */}
+          <path
+            d="M20 0C11 1.5 4 6 0 13C2 7 8 2 20 0Z"
+            fill="#fab915"
+          />
+          <path
+            d="M20 0C11 -1.5 4 -6 0 -13C2 -7 8 -2 20 0Z"
+            fill="#f5a600"
+          />
+
+          {/* Bottom petal: Fresh Green #00a859 */}
+          <path
+            d="M0 22C-1.5 12 -7 4 -13 0C-7 2 -2 8 0 22Z"
+            fill="#00a859"
+          />
+          <path
+            d="M0 22C1.5 12 7 4 13 0C7 2 2 8 0 22Z"
+            fill="#1bb366"
+          />
+
+          {/* Left / Center petal: Cyan Teal #00a0dd */}
+          <path
+            d="M-18 -8C-10 -5 -4 -2 0 0C-4 -5 -9 -11 -18 -8Z"
+            fill="#009fe3"
+          />
+          <path
+            d="M-18 8C-10 5 -4 2 0 0C-4 5 -9 11 -18 8Z"
+            fill="#0083be"
+          />
+        </g>
       </svg>
     </div>
   );
 };
 
-// Official Saudi Vision 2030 Logo (Vector Replica)
+// 3. Exact Takamol Logo (مطابق للصورة المرجعية - تكامل Takamol)
+export const TakamolLogo: React.FC<{ className?: string; customUrl?: string }> = ({
+  className = 'h-10 w-auto object-contain',
+  customUrl,
+}) => {
+  if (customUrl) {
+    return <img src={customUrl} alt="تكامل Takamol" className={className} />;
+  }
+
+  return (
+    <div className={`flex items-center justify-center select-none ${className}`}>
+      <svg viewBox="0 0 100 48" className="h-full w-auto max-w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(10, 4)">
+          {/* Wordmark تـكـامـل in modern clean charcoal font */}
+          <text
+            x="40"
+            y="25"
+            textAnchor="middle"
+            fill="#2c3e50"
+            fontSize="18"
+            fontWeight="bold"
+            letterSpacing="-0.5"
+            fontFamily="'Cairo', 'Noto Naskh Arabic', Arial, sans-serif"
+          >
+            تـكـامـل
+          </text>
+          {/* Subtext Takamol in crisp sans-serif */}
+          <text
+            x="40"
+            y="37"
+            textAnchor="middle"
+            fill="#5a6b7c"
+            fontSize="8"
+            fontWeight="600"
+            letterSpacing="0.8"
+            fontFamily="Arial, sans-serif"
+          >
+            Takamol
+          </text>
+        </g>
+      </svg>
+    </div>
+  );
+};
+
+// 4. Exact Saudi Vision 2030 Logo
 export const Vision2030Logo: React.FC<{ className?: string; customUrl?: string }> = ({
-  className = 'h-11 w-auto object-contain',
+  className = 'h-10 w-auto object-contain',
   customUrl,
 }) => {
   if (customUrl) {
@@ -51,24 +210,21 @@ export const Vision2030Logo: React.FC<{ className?: string; customUrl?: string }
   }
 
   return (
-    <div className={`flex items-center select-none ${className}`}>
-      <svg viewBox="0 0 110 50" className="h-full w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g transform="translate(5, 5)">
-          {/* Palm emblem above 2030 */}
-          <path d="M50 3C49 6 47 8 45 9C47 10 49 12 50 14C51 12 53 10 55 9C53 8 51 6 50 3Z" fill="#007a3d" />
-          <path d="M49 13H51V20H49V13Z" fill="#b08a3e" />
-          <path d="M43 21C47 21 51 19 55 16L54 15C50 17 46 19 43 19V21Z" fill="#b08a3e" />
-          <path d="M57 21C53 21 49 19 45 16L46 15C50 17 54 19 57 19V21Z" fill="#b08a3e" />
+    <div className={`flex items-center justify-center select-none ${className}`}>
+      <svg viewBox="0 0 100 48" className="h-full w-auto max-w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(10, 4)">
+          {/* Emblem palm */}
+          <path d="M40 2C39 5 37 7 35 8C37 9 39 11 40 13C41 11 43 9 45 8C43 7 41 5 40 2Z" fill="#007a3d" />
+          <path d="M39 11H41V16H39V11Z" fill="#a07d32" />
+          <path d="M34 17C37 17 40 15 44 13L43 12C39 14 36 15 34 15V17Z" fill="#a07d32" />
+          <path d="M46 17C43 17 40 15 36 13L37 12C41 14 44 15 46 15V17Z" fill="#a07d32" />
 
-          {/* Typography VISION 2030 */}
-          <text x="50" y="27" textAnchor="middle" fill="#007a3d" fontSize="9" fontWeight="800" letterSpacing="0.8" fontFamily="Arial, sans-serif">
+          {/* Typography */}
+          <text x="40" y="24" textAnchor="middle" fill="#007a3d" fontSize="7.5" fontWeight="800" letterSpacing="0.5" fontFamily="Arial, sans-serif">
             VISION رؤيـــة
           </text>
-          <text x="50" y="38" textAnchor="middle" fill="#2d3748" fontSize="13" fontWeight="900" letterSpacing="1.5" fontFamily="Arial, sans-serif">
+          <text x="40" y="34" textAnchor="middle" fill="#1f2937" fontSize="12" fontWeight="900" letterSpacing="1" fontFamily="Arial, sans-serif">
             2030
-          </text>
-          <text x="50" y="44" textAnchor="middle" fill="#718096" fontSize="5" fontWeight="600" fontFamily="'Noto Naskh Arabic', Arial, sans-serif">
-            المملكة العربية السعودية
           </text>
         </g>
       </svg>
@@ -76,9 +232,9 @@ export const Vision2030Logo: React.FC<{ className?: string; customUrl?: string }
   );
 };
 
-// Official Qiwa Platform Logo (Vector Replica)
+// 5. Official Qiwa Platform Logo
 export const QiwaLogo: React.FC<{ className?: string; customUrl?: string }> = ({
-  className = 'h-10 w-auto object-contain',
+  className = 'h-9 w-auto object-contain',
   customUrl,
 }) => {
   if (customUrl) {
@@ -86,54 +242,18 @@ export const QiwaLogo: React.FC<{ className?: string; customUrl?: string }> = ({
   }
 
   return (
-    <div className={`flex items-center select-none ${className}`}>
-      <svg viewBox="0 0 100 45" className="h-full w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div className={`flex items-center justify-center select-none ${className}`}>
+      <svg viewBox="0 0 90 45" className="h-full w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g transform="translate(6, 6)">
-          {/* Qiwa modern connected dots & lines emblem */}
-          <circle cx="14" cy="16" r="10" stroke="#00a859" strokeWidth="2.5" fill="none" />
-          <circle cx="14" cy="16" r="4.5" fill="#00a859" />
-          <circle cx="27" cy="8" r="2.5" fill="#2db875" />
-          <circle cx="27" cy="24" r="2.5" fill="#006633" />
-          <path d="M22 12L25 9" stroke="#2db875" strokeWidth="1.5" />
-          <path d="M22 20L25 23" stroke="#006633" strokeWidth="1.5" />
-
-          {/* Qiwa Typography */}
-          <text x="36" y="19" fill="#1a202c" fontSize="16" fontWeight="900" fontFamily="'Noto Naskh Arabic', Arial, sans-serif">
+          <circle cx="12" cy="16" r="9" stroke="#00a859" strokeWidth="2.2" fill="none" />
+          <circle cx="12" cy="16" r="4" fill="#00a859" />
+          <circle cx="24" cy="9" r="2.2" fill="#2db875" />
+          <circle cx="24" cy="23" r="2.2" fill="#006633" />
+          <text x="32" y="19" fill="#1a202c" fontSize="15" fontWeight="900" fontFamily="'Cairo', 'Noto Naskh Arabic', Arial, sans-serif">
             قـوى
           </text>
-          <text x="37" y="29" fill="#00a859" fontSize="8" fontWeight="800" letterSpacing="1" fontFamily="Arial, sans-serif">
+          <text x="33" y="28" fill="#00a859" fontSize="7.5" fontWeight="800" letterSpacing="1" fontFamily="Arial, sans-serif">
             QIWA
-          </text>
-        </g>
-      </svg>
-    </div>
-  );
-};
-
-// Official Ajeer Logo (Vector Replica)
-export const AjeerLogo: React.FC<{ className?: string; customUrl?: string }> = ({
-  className = 'h-11 w-auto object-contain',
-  customUrl,
-}) => {
-  if (customUrl) {
-    return <img src={customUrl} alt="شعار أجير Ajeer" className={className} />;
-  }
-
-  return (
-    <div className={`flex items-center select-none ${className}`}>
-      <svg viewBox="0 0 110 45" className="h-full w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Modern geometric green Ajeer brandmark */}
-        <g transform="translate(4, 4)">
-          {/* Logo Icon */}
-          <path d="M8 32V10L19 4L30 10V32L19 38L8 32Z" stroke="#009639" strokeWidth="2.5" fill="none" />
-          <path d="M19 4V38" stroke="#009639" strokeWidth="2" strokeDasharray="2 2" />
-          <circle cx="19" cy="18" r="4" fill="#009639" />
-          {/* Brand Wordmark in Arabic & English */}
-          <text x="38" y="24" fill="#009639" fontSize="21" fontWeight="800" fontFamily="Arial, 'Noto Naskh Arabic', sans-serif">
-            أجـيـر
-          </text>
-          <text x="39" y="34" fill="#666666" fontSize="8.5" fontWeight="600" letterSpacing="1" fontFamily="Arial, sans-serif">
-            AJEER
           </text>
         </g>
       </svg>

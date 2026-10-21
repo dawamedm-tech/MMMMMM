@@ -142,10 +142,10 @@ function getInitialDB(): DBStructure {
       footerNoticeText: 'هذا التصريح صادر وفق الضوابط واللوائح المعتمدة بنظام العمل بالمملكة العربية السعودية.',
       defaultTerms: ['يقتصر عمل العامل المصرح له على المواقع المذكورة فقط.'],
       maskSensitiveData: false,
-      footerLogos: ['', '', ''],
-      footerLogo1: '',
-      footerLogo2: '',
-      footerLogo3: '',
+      footerLogos: ['/logos/logo-takamol.svg', '/logos/logo-mohrsd.svg', '/logos/logo-vision2030.svg'],
+      footerLogo1: '/logos/logo-takamol.svg',
+      footerLogo2: '/logos/logo-mohrsd.svg',
+      footerLogo3: '/logos/logo-vision2030.svg',
     },
     auditLogs: [],
   };
@@ -156,6 +156,13 @@ try {
   if (fs.existsSync(DB_FILE)) {
     const raw = fs.readFileSync(DB_FILE, 'utf-8');
     db = JSON.parse(raw);
+    if (!db.settings.footerLogos || !db.settings.footerLogos.some((l: string) => l && l.trim())) {
+      db.settings.footerLogos = ['/logos/logo-takamol.svg', '/logos/logo-mohrsd.svg', '/logos/logo-vision2030.svg'];
+      db.settings.footerLogo1 = '/logos/logo-takamol.svg';
+      db.settings.footerLogo2 = '/logos/logo-mohrsd.svg';
+      db.settings.footerLogo3 = '/logos/logo-vision2030.svg';
+      fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), 'utf-8');
+    }
   } else {
     db = getInitialDB();
     fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), 'utf-8');
